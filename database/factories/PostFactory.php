@@ -16,8 +16,12 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence();
         return [
-            //
+            'title' => $title,
+            'slug' => preg_replace('/[^a-z0-9]/i', '-', $title),
+            'description' => $this->faker->sentences(mt_rand(4, 6), true),
+            'publication_date' => now()->subtract(mt_rand(2, 7) . ' days')->format('Y-m-d H:i:s'),
         ];
     }
 }
