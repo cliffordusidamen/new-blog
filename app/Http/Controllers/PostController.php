@@ -24,12 +24,24 @@ class PostController extends Controller
     /**
      * Show post page
      *
-     * @param string $slug
+     * @param string $id
      * @return \Illuminate\View\View
      */
-    public function show(string $slug): View
+    public function show(string $id): View
     {
-        $post = \App\Models\Post::where('slug', $slug)->firstOrFail();
+        $post = \App\Models\Post::findOrFail((int) $id);
         return view('posts.show', compact('post'));
+    }
+
+    /**
+     * Personal posts listing page
+     * 
+     * @return View
+     */
+    public function myPosts(Request $request): View
+    {
+        $posts = $request->user()->posts()->paginate(10);
+
+        return view('posts.my_posts', compact('posts'));
     }
 }

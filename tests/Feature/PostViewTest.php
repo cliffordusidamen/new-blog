@@ -19,14 +19,13 @@ class PostViewTest extends TestCase
     public function can_view_post()
     {
         $user = \App\Models\User::factory()->create([]);
-        $user->posts()->create([
+        $post = $user->posts()->create([
             'title' => 'Sample title',
-            'slug' => 'sample-title',
             'description' => 'Sample description',
             'publication_date' => '2022-03-04',
         ]);
 
-        $response = $this->get('/posts/sample-title');
+        $response = $this->get("/posts/{$post->id}");
 
         $response->assertSee('Sample title');
         $response->assertSee('Sample description');
