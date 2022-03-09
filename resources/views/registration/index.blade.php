@@ -1,6 +1,7 @@
 <x-layouts.default>
     <h4>Registration</h4>
     <form action="{{ route('register') }}" method="post">
+        @csrf
         <div>
             <label for="name">Your name</label><br />
             <input type="text" name="name" id="name" />

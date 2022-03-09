@@ -12,11 +12,12 @@ class RegistrationTest extends TestCase
     use WithFaker;
 
     /**
-     * A basic feature test example.
-     *
+     * Test that home pageis viewable
+     * 
+     * @test
      * @return void
      */
-    public function test_example()
+    public function can_view_home_page()
     {
         $response = $this->get('/');
 
@@ -41,6 +42,7 @@ class RegistrationTest extends TestCase
         $response->assertSee('name="name"', false);
         $response->assertSee('name="password"', false);
         $response->assertSee('name="password_confirmation"', false);
+        $response->assertSee('name="_token"', false);
         $response->assertSee('type="submit"', false);
 
     }
@@ -66,6 +68,11 @@ class RegistrationTest extends TestCase
 
         $this->assertNotEmpty($user);
         $this->assertEquals($user->email, 'user@website.com');
+    }
+
+    public function password_is_encrypted(): void
+    {
+        # code...
     }
 
     /**
