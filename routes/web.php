@@ -26,3 +26,7 @@ Route::post('/register', [\App\Http\Controllers\RegistrationController::class, '
 Route::get('my-posts', [\App\Http\Controllers\PostController::class, 'myPosts'])
     ->name('my_posts')
     ->middleware('auth');
+
+Route::get('my-posts/{id}', [\App\Http\Controllers\PostController::class, 'showMyPost'])
+    ->name('my_posts.show')
+    ->middleware('auth');

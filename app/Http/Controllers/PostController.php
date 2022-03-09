@@ -44,4 +44,20 @@ class PostController extends Controller
 
         return view('posts.my_posts', compact('posts'));
     }
+
+    /**
+     * View personal post
+     *
+     * @param string $id
+     * @param Request $request
+     * @return View
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function showMyPost(
+        string $id,
+        Request $request
+    ): View {
+        $post = $request->user()->posts()->findOrFail((int) $id);
+        return view('posts.show_my_post' , compact('post'));
+    }
 }

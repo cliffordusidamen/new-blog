@@ -70,4 +70,48 @@ class PersonalPostsTest extends TestCase
         $response->assertSee($myPost->title);
         $response->assertDontSee($otherPost->title);
     }
+
+    /**
+     * Test that use can view personal post
+     *
+     * @test
+     * @return void
+     */
+    public function can_veiw_personal_post(): void
+    {
+        $user = User::create([
+            'name' => 'user',
+        ]);
+
+        $myPost = \App\Models\Post::factory()
+            ->for($user)
+            ->create();
+
+        $response = $this->actingAs($user)->get(route('my_posts.show', $myPost));
+
+        $response->assertOk();
+        $response->assertSee($myPost->title);
+        $response->assertSee($myPost->description);
+    }
+
+    /**
+     * Test that use cannot view personal post
+     *
+     * @test
+     * @return void
+     */
+    public function cannot_veiw_other_post_as_personal_post(): void
+    {
+        $user = User::create([
+            'name' => 'user',
+        ]);
+
+        $otherPost = \App\Models\Post::factory()
+            ->for(User::factory())
+            ->create();
+
+        $response = $this->actingAs($user)->get(route('my_posts.show', $otherPost));
+
+        $response->assertNotFound();
+    }
 }
