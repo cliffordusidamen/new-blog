@@ -18,6 +18,15 @@ Route::get('login',[\App\Http\Controllers\AuthController::class, 'login'])
     ->name('login');
 
 Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
+
+Route::get('posts/create', [\App\Http\Controllers\PostController::class, 'showPostCreationForm'])
+    ->name('posts.create')
+    ->middleware('auth');
+
+Route::post('posts/store', [\App\Http\Controllers\PostController::class, 'storePost'])
+    ->name('posts.store')
+    ->middleware('auth');
+
 Route::get('/posts/{id}', [\App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
 
 Route::get('/register', [\App\Http\Controllers\RegistrationController::class, 'index'])->name('registration_form');

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -59,5 +61,52 @@ class PostController extends Controller
     ): View {
         $post = $request->user()->posts()->findOrFail((int) $id);
         return view('posts.show_my_post' , compact('post'));
+    }
+
+    /**
+     * Display form for creating a post
+     *
+     * @return View
+     */
+    public function showPostCreationForm(): View
+    {
+        return view('posts.create');
+    }
+
+    /**
+     * Save new post to database
+     *
+     * @param StorePostRequest $request
+     * @return RedirectResponse
+     */
+    public function storePost(
+        StorePostRequest $request
+    ): RedirectResponse {
+
+        $data = collect($request->validated())
+            ->only(['title', 'description'])
+            ->toArray();
+        $data['publication_date'] = \Carbon\Carbon::now();
+
+        $post = $request
+            ->user()
+            ->posts()
+            ->create($data);
+
+        if ($post) {
+            return redirect()->route('my_posts')->with([
+                'status' => 'success',
+                'message' => 'Post created successfully!',
+            ]);
+        }
+
+        dd('Here');
+
+        return redirect()->route('posts.create')
+            ->withInput()
+            ->with([
+                'status' => 'warning',
+                'message' => 'Post was not created! Please, try again.',
+            ]);
     }
 }

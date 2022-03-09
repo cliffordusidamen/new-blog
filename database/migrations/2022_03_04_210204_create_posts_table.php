@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 255)->unique();
+            $table->string('title', 255);
             $table->text('description');
             $table->date('publication_date');
             $table->unsignedBigInteger('user_id');
