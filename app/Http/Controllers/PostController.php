@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -15,13 +16,24 @@ class PostController extends Controller
     /**
      * List all posts
      *
-     * @return View
+     * @param  \Illuminate\Http\Request  $request
+     * @return View|JsonResponse
      */
-    public function index(): View
+    public function index(
+        Request $request
+    ): View|JsonResponse
     {
-        $posts = Post::all();
+        $order = $request->query('order');
+        $order = $order === 'oldest' ? 'asc' : 'desc';
 
-        return view('posts.index', compact('posts'));
+        $posts = Post::orderBy('publication_date', $order)
+            ->paginate(10);
+
+        if ($request->wantsJson()) {
+            return response()->json($posts);
+        }
+
+        return view('posts.index', compact('posts', 'order'));
     }
     /**
      * Show post page
@@ -99,8 +111,6 @@ class PostController extends Controller
                 'message' => 'Post created successfully!',
             ]);
         }
-
-        dd('Here');
 
         return redirect()->route('posts.create')
             ->withInput()
