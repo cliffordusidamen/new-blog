@@ -22,6 +22,10 @@ Route::post('login',[\App\Http\Controllers\AuthController::class, 'authenticate'
     ->name('authenticate')
     ->middleware('guest');
 
+Route::post('logout',[\App\Http\Controllers\AuthController::class, 'logout'])
+    ->name('logout')
+    ->middleware('auth');
+
 Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
 
 Route::get('posts/create', [\App\Http\Controllers\PostController::class, 'showPostCreationForm'])

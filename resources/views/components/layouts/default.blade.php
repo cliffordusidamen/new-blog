@@ -34,7 +34,15 @@
 <body>
     <nav>
         <a href="/">{{ config('app.name') }}</a>
-        <a href="/">HOME</a>
+
+        @auth
+            <a href="{{ route('logout') }}" onclick="document.querySelector('#frm-logout').submit()">Logout</a>
+            <form id="frm-logout" action="{{ route('logout') }}" method="post">
+                @csrf
+            </form>
+        @else
+            <a href="{{ route('login') }}">LOGIN</a>
+        @endauth
     </nav>
 
     <div class="content-area">

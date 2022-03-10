@@ -29,12 +29,12 @@ class LoginTest extends TestCase
     }
 
     /**
-     * Test that visitor cannot login with invalid credentials
+     * Test that guest cannot login with invalid credentials
      *
      * @test
      * @return void
      */
-    public function visitor_cannot_login_with_wrong_credentials(): void
+    public function guest_cannot_login_with_wrong_credentials(): void
     {
         $user = \App\Models\User::factory()->create([]);
 
@@ -48,12 +48,12 @@ class LoginTest extends TestCase
     }
 
     /**
-     * Test that a visitor can login with valid credentials
+     * Test that a guest can login with valid credentials
      *
      * @test
      * @return void
      */
-    public function visitor_can_login_with_valid_credentials(): void
+    public function guest_can_login_with_valid_credentials(): void
     {
         $user = \App\Models\User::factory()->state([
             'password' => 'password',

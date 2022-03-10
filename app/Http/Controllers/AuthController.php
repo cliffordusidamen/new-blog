@@ -39,4 +39,16 @@ class AuthController extends Controller
 
         return redirect()->route('login')->withErrors(['email' => 'Invalid credentials']);
     }
+
+    /**
+     * Logout user
+     *
+     * @return RedirectResponse
+     */
+    public function logout(): RedirectResponse
+    {
+        auth()->logout();
+
+        return redirect()->route('login');
+    }
 }
