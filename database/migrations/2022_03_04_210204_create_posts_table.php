@@ -27,6 +27,8 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
+            $table->unique(['title', 'user_id'], 'posts_title_user_id_unique');
+
         });
     }
 

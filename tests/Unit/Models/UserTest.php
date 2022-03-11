@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
+    use RefreshDatabase;
 
     /**
      * Test that the password is properly encrypted
@@ -26,5 +27,18 @@ class UserTest extends TestCase
         ])->make();
 
         $this->assertNotSame('password1', $user->password);
+    }
+
+    /**
+     * Test that an admin user can be created
+     *
+     * @test
+     * @return void
+     */
+    public function can_create_admin_user(): void
+    {
+        $adminUser = User::getAdminUser();
+
+        $this->assertNotNull($adminUser->is_admin);
     }
 }

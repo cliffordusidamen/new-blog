@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -42,6 +43,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_admin' => 'boolean',
     ];
 
     /**
@@ -63,5 +65,18 @@ class User extends Authenticatable
     public function setPasswordAttribute(string $value): void
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    /**
+     * Get or create an admin user
+     * 
+     * @return \App\Models\User
+     */
+    public static function getAdminUser(): User
+    {
+        return static::firstOrCreate([
+            'name' => 'Admin',
+            'is_admin' => true,
+        ]);
     }
 }
