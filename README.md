@@ -2,6 +2,9 @@
 
 This is the new customer blog with auto-feed from previous blog.
 
+### Requirement
+- PHP 8+
+- Enable **pdo_sqlite** extenion
 ### Installation
 - Clone the repo
 - Install php packages via composer by running **composer install**
