@@ -10,5 +10,20 @@ This is the new customer blog with auto-feed from previous blog.
 
 
 ### Testing
+```
    php artisan test
+```
+
+### Run schedule task
+There is a task schedule to get posts from the blog API and save to the database, hourly.
+To run this locally you can run the following command in a terminal:
+
+```
+   php artisan schedule:run
+```
+To run  this using cron, you can setup a cron job on your server to run hourly:
+
+```
+   * * * * * cd /path/to/project && php artisan schedule:run >> /dev/null 2>&1
+```
 
